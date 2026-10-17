@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "author": "SAHAJ",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "soil", "top": -130, "left": 190, "attrs": {} },
+    { "type": "wokwi-relay-module", "id": "relay", "top": 130, "left": 190, "attrs": {} },
+    { "type": "wokwi-slide-switch", "id": "grid", "top": -10, "left": 270, "attrs": {} },
+    { "type": "wokwi-led", "id": "led", "top": -60, "left": -120, "attrs": { "color": "green" } },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": -60,
+      "left": -190,
+      "attrs": { "value": "220" }
+    }
+  ],
+  "connections": [
+    [ "soil:VCC", "esp:3V3", "red", [] ],
+    [ "soil:GND", "esp:GND.1", "black", [] ],
+    [ "soil:SIG", "esp:D34", "green", [] ],
+    [ "relay:VCC", "esp:5V", "red", [] ],
+    [ "relay:GND", "esp:GND.2", "black", [] ],
+    [ "relay:IN", "esp:D26", "orange", [] ],
+    [ "grid:2", "esp:D27", "blue", [] ],
+    [ "grid:1", "esp:GND.3", "black", [] ],
+    [ "esp:D2", "r1:1", "green", [] ],
+    [ "r1:2", "led:A", "green", [] ],
+    [ "led:C", "esp:GND.3", "black", [] ]
+  ],
+  "dependencies": {}
+}
