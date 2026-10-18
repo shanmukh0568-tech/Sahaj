@@ -4,7 +4,8 @@
 irrigation advice on WhatsApp, in their own language, from sensors in their own field, and
 switches the pump on only when the soil needs water. Built for Plaksha University's Young
 Creators League 2026.
-
+- Rice fields use **AWD water-level sensing** (ultrasonic on a field tube), not soil moisture.
+- Voice advice is generated with **Sarvam** (Indian-language voice AI).
 By Shanmukh, Saanvi and Durgashree.
 
 ## What's in this repo
