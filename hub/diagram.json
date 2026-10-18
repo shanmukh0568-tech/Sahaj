@@ -3,13 +3,13 @@
   "author": "SAHAJ",
   "editor": "wokwi",
   "parts": [
-    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0,    "left": 0 },
-    { "type": "wokwi-bme280",          "id": "bme", "top": -100, "left": 180 }
+    { "type":"wokwi-esp32-devkit-v1", "id":"esp", "top":0, "left":0 },
+    { "type":"wokwi-bme280", "id":"bme", "top":-40, "left":200 }
   ],
   "connections": [
-    ["bme:VCC", "esp:3V3",   "red",    []],
-    ["bme:GND", "esp:GND.1", "black",  []],
-    ["bme:SCL", "esp:D22",   "yellow", []],
-    ["bme:SDA", "esp:D21",   "green",  []]
+    ["bme:VCC","esp:3V3","red",[]],
+    ["bme:GND","esp:GND.1","black",[]],
+    ["bme:SDA","esp:D21","green",[]],
+    ["bme:SCL","esp:D22","blue",[]]
   ]
 }
