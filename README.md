@@ -1,37 +1,33 @@
-# SAHAJ Area Reader
+# SAHAJ
 
-Firmware for the area reader: reads soil moisture and controls the pump. Tested in the Wokwi ESP32 simulator.
+**Sensor-driven Agricultural Help & Advisory in your Jubaan.** SAHAJ gives small farmers
+irrigation advice on WhatsApp, in their own language, from sensors in their own field, and
+switches the pump on only when the soil needs water. Built for Plaksha University's Young
+Creators League 2026.
 
-## What it does
-- Waters only when the soil is dry; stops at a target, with a gap so the pump doesn't flicker.
-- Runs only while grid power is available.
-- Never runs longer than a safety cap; after a safety stop, waits a cooldown and flags the farmer.
+By Shanmukh, Saanvi and Durgashree.
 
-## Pins
-| Part | Role | ESP32 pin |
-|------|------|-----------|
-| Capacitive soil sensor (potentiometer in sim) | soil moisture | GPIO34 |
-| Relay module | pump | GPIO26 |
-| Switch (grid-power sense) | power available | GPIO27 |
-| LED | pump indicator | GPIO2 |
+## What's in this repo
+- **reader/** — firmware for the area reader: reads soil moisture and controls the pump
+  (dry → on, target → off, power-aware, safety cap + cooldown). Tested in the Wokwi ESP32 simulator.
+- **hub/** — firmware for the village hub: reads weather (BME280), receives reader data over
+  radio, and is where the WhatsApp alert is triggered.
+- **bot/** — the WhatsApp + voice side: sends alerts to farmers and speaks them in Telugu
+  (Sarvam AI). Plain Node, no libraries.
 
-On a real farm the relay switches the motor's starter, fitted by a licensed electrician.
+## How the parts fit together
+Sensors in the field → the reader decides when to water and runs the pump → readings go to the
+hub → the hub sends the farmer a WhatsApp message, in their language, by voice.
 
-## Calibration
-The board reads the sensor as a raw number (0–4095); calibration maps raw → %.
-1. Temporarily add in loop(): `Serial.print("raw = "); Serial.println(analogRead(34));`
-2. Read in dry air → RAW_DRY. Read in water → RAW_WET.
-3. Put both at the top of the sketch, remove the line.
+## Status
+Prototype for Round 1. The reader logic and the WhatsApp + voice pipeline both work. Still
+ahead: the radio link between the two real boards, per-device encryption, and a field pilot.
 
-Sim pot gives 4095 (dry) / 0 (wet). A real sensor differs (~3000 dry, ~1300 wet) and varies per unit, so re-calibrate each one.
+## Roadmap
+- ESP-NOW radio link from reader to hub (real boards).
+- Per-device encryption and rejection of fake readers.
+- Water-level sensing for rice (Alternate Wetting and Drying).
+- Field pilot with KVK guidance; Bhashini for voice at national scale.
 
-## Settings (top of reader.ino)
-| Constant | Meaning | Demo value |
-|----------|---------|------------|
-| RAW_DRY / RAW_WET | sensor calibration | 4095 / 0 |
-| MOIST_START | % that triggers watering | 30 |
-| MOIST_STOP | % that stops watering | 60 |
-| MAX_RUN_MS | safety cap on run time | 60 s (demo) |
-| COOLDOWN_MS | wait after a safety stop | 30 s (demo) |
-
-Real per-crop thresholds come from the field pilot with KVK guidance.
+## License
+MIT.
