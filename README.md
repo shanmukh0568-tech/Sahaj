@@ -15,6 +15,7 @@ By Shanmukh, Saanvi and Durgashree.
   radio, and is where the WhatsApp alert is triggered.
 - **bot/** — the WhatsApp + voice side: sends alerts to farmers and speaks them in Telugu
   (Sarvam AI). Plain Node, no libraries.
+- **security/** - The security for the encryption of the readers to the hub, building privacy for the farmer(not hardened yet)
 
 ## How the parts fit together
 Sensors in the field → the reader decides when to water and runs the pump → readings go to the
