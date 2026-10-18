@@ -1,17 +1,18 @@
+/*  SAHAJ — Village Hub. Reads weather + receives reader data.
+    ESP-NOW does NOT simulate in Wokwi — test the radio on the two
+    real boards. In Wokwi, you're only checking the BME280 read. */
 #include <Wire.h>
 #include <Adafruit_BME280.h>
 #include <esp_now.h>
 #include <WiFi.h>
 
 Adafruit_BME280 bme;   // I2C: SDA=21, SCL=22
-
 typedef struct { int moist; float soilC; bool power; bool pump; } ReaderMsg;
 
-void onData(const uint8_t *mac, const uint8_t *data, int len) {
-  if (len != sizeof(ReaderMsg)) return;   // reject wrong-size (fake) packets
+void onData(const esp_now_recv_info_t *info, const uint8_t *data, int len) {
+  if (len != sizeof(ReaderMsg)) return;   // drops malformed packets — NOT security yet
   ReaderMsg m; memcpy(&m, data, sizeof(m));
   Serial.printf("HUB got: moist=%d pump=%s\n", m.moist, m.pump ? "on" : "off");
-  // TODO: if (m.moist <= 30) call Section C's sendDryAlert()
 }
 
 void setup() {
